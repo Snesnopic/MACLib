@@ -1,3 +1,4 @@
+#include "All.h"
 /**************************************************************************************************
 Monkey's Audio MACLib.h (include for using MACLib.lib in your projects)
 

@@ -69,8 +69,11 @@ __forceinline int Abs(int32 nValue)
 { return abs(nValue); }
 
 __forceinline int64 Abs(int64 nValue)
+#if defined(__FreeBSD__)
+{ return std::llabs(nValue); } // FreeBSD fix
+#else
 { return llabs(nValue); }
-
+#endif
 /*************************************************************************************************/
 
 __forceinline void Adapt(short * pM, const short * pAdapt, int32 nDirection, int nOrder)

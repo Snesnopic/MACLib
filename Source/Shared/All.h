@@ -48,6 +48,9 @@ Global includes
 **************************************************************************************************/
 #include <stdint.h>
 #include <stdlib.h>
+#ifdef __FreeBSD__
+#include <cstdlib>
+#endif
 #include <memory.h>
 #include <stdio.h>
 #include <math.h>
