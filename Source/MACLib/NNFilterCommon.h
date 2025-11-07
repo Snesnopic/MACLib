@@ -70,7 +70,7 @@ __forceinline int Abs(int32 nValue)
 
 __forceinline int64 Abs(int64 nValue)
 #if defined(__FreeBSD__)
-{ return std::llabs(nValue); } // FreeBSD fix
+{ return std::abs(nValue); } // FreeBSD fix
 #else
 { return llabs(nValue); }
 #endif
