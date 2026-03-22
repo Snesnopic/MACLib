@@ -15,7 +15,7 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS        // some CString constructors will be explicit
 
 // MFC
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(NO_MFC)
 #pragma warning(push) // push and pop warnings because the MFC includes suppresses some
 #include <afxwin.h>                                // MFC core and standard components
 #include <afxext.h>                                // MFC extensions
@@ -27,7 +27,7 @@
 #include "MACLib.h"
 
 // MFC globals
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(NO_MFC)
 #include "MFCGlobals.h"
 #endif
 

@@ -31,6 +31,9 @@ mail at monkeysaudio dot com
 
 #pragma once
 
+// include base dependencies for maclib
+#include "All.h"
+
 namespace APE
 {
 
