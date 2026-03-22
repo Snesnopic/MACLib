@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.6...4.10)
 project("Monkey's Audio")
+
+option(BUILD_SHARED "Build libMAC as a shared library" ON)
+option(BUILD_UTIL "Build the mac command line tool" ON)
+option(ENABLE_MFC "Enable MFC support on Windows" OFF)
 
 set(CMAKE_CXX_STANDARD 98)
 
@@ -245,9 +249,21 @@ else()
     add_library(MAC STATIC $<TARGET_OBJECTS:shared> $<TARGET_OBJECTS:objects>)
 endif()
 
+# propagate include directories to consumers
+target_include_directories(MAC PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Shared>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/MAC>
+)
+
 if(WIN32)
     target_compile_definitions(shared PUBLIC PLATFORM_WINDOWS)
     target_compile_definitions(objects PUBLIC PLATFORM_WINDOWS)
+    # apply no_mfc to object libraries and export to consumers
+    if(NOT ENABLE_MFC)
+        target_compile_definitions(shared PUBLIC NO_MFC)
+        target_compile_definitions(objects PUBLIC NO_MFC)
+        target_compile_definitions(MAC PUBLIC NO_MFC)
+    endif()
 elseif(APPLE)
     target_compile_definitions(shared PUBLIC PLATFORM_APPLE)
     target_compile_definitions(objects PUBLIC PLATFORM_APPLE)
