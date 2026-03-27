@@ -314,7 +314,10 @@ Byte order
 #define APE_LITTLE_ENDIAN     1234
 #define APE_BIG_ENDIAN        4321
 
-#if defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN__) || (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__))
+// rely on compiler built-ins first, then fallback to system headers evaluation
+#if (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)) || \
+(defined(_BYTE_ORDER) && defined(_BIG_ENDIAN) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
+(defined(__BYTE_ORDER) && defined(__BIG_ENDIAN) && (__BYTE_ORDER == __BIG_ENDIAN))
 #define APE_BYTE_ORDER        APE_BIG_ENDIAN
 #else
 #define APE_BYTE_ORDER        APE_LITTLE_ENDIAN
