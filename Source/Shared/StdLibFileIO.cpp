@@ -154,11 +154,11 @@ int CStdLibFileIO::Open(const str_utfn * pName, bool)
     else
     {
         CSmartPtr<char> spFilenameUTF8((char *) CAPECharacterHelper::GetUTF8FromUTFN(pName), true);
-        m_pFile = fopen(spFilenameUTF8, "r+be");
+        m_pFile = fopen(spFilenameUTF8, "r+b");
         if (m_pFile == APE_NULL && (errno == EACCES || errno == EPERM || errno == EROFS))
         {
             // failed asking for read/write mode on open, try read-only
-            m_pFile = fopen(spFilenameUTF8, "rbe");
+            m_pFile = fopen(spFilenameUTF8, "rb");
             if (m_pFile)
                 m_bReadOnly = true;
         }
@@ -272,7 +272,7 @@ int CStdLibFileIO::Create(const str_utfn * pName)
     {
         CSmartPtr<char> spFilenameUTF8((char *) CAPECharacterHelper::GetUTF8FromUTFN(pName), true);
         // NOTE: on Mac OSX (BSD Unix), we MUST have "w+b" if we want to read & write, with other systems "wb" seems to be fine
-        m_pFile = fopen(spFilenameUTF8, "w+be");                  // Read/Write
+        m_pFile = fopen(spFilenameUTF8, "w+b");                  // Read/Write
         m_bReadOnly = false;
     }
 
